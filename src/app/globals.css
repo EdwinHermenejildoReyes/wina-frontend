@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  --color-rosa:      #D45C8A;
+  --color-rosa-dark: #B84A75;
+  --color-crema:     #FFF5F8;
+  --color-dark:      #2D2D2D;
+  --color-gris:      #F5F5F5;
+  --color-gris-borde:#E5E7EB;
+
+  --font-sans: var(--font-poppins), system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-crema);
+  color: var(--color-dark);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Scroll suave en toda la app */
+html {
+  scroll-behavior: smooth;
+}
