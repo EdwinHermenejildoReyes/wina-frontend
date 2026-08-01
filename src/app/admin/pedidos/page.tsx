@@ -11,7 +11,6 @@ import type { Pedido, EstadoPedido } from "@/lib/types";
 const ESTADOS: { value: EstadoPedido | "todos"; label: string }[] = [
   { value: "todos",          label: "Todos" },
   { value: "pendiente",      label: "Pendiente" },
-  { value: "confirmado",     label: "Confirmado" },
   { value: "en_preparacion", label: "En preparación" },
   { value: "listo",          label: "Listo" },
   { value: "retirado",       label: "Retirado" },
@@ -20,7 +19,6 @@ const ESTADOS: { value: EstadoPedido | "todos"; label: string }[] = [
 
 const ESTADO_COLORES: Record<EstadoPedido, string> = {
   pendiente:      "bg-yellow-100 text-yellow-700",
-  confirmado:     "bg-blue-100 text-blue-700",
   en_preparacion: "bg-orange-100 text-orange-700",
   listo:          "bg-green-100 text-green-700",
   retirado:       "bg-gray-100 text-gray-600",
@@ -28,10 +26,9 @@ const ESTADO_COLORES: Record<EstadoPedido, string> = {
 };
 
 const TRANSICIONES: Record<EstadoPedido, { accion: string; label: string } | null> = {
-  pendiente:      { accion: "confirmar",   label: "Confirmar" },
-  confirmado:     { accion: "preparar",    label: "En preparación" },
-  en_preparacion: { accion: "listo",       label: "Marcar listo" },
-  listo:          { accion: "retirar",     label: "Retirado" },
+  pendiente:      { accion: "confirmar", label: "En preparación" },
+  en_preparacion: { accion: "listo",     label: "Marcar listo" },
+  listo:          { accion: "retirar",   label: "Retirado" },
   retirado:       null,
   cancelado:      null,
 };

@@ -57,7 +57,6 @@ export interface CarritoItem {
 
 export type EstadoPedido =
   | "pendiente"
-  | "confirmado"
   | "en_preparacion"
   | "listo"
   | "retirado"
@@ -111,6 +110,6 @@ export interface HistorialPuntos {
 }
 
 export interface MiHistorialResponse {
-  puntos_actuales: number;
+  puntos: number;
   historial: HistorialPuntos[];
 }

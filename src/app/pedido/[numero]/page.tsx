@@ -2,18 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { CheckCircle, Clock, ChefHat, Package, ShoppingBag } from "lucide-react";
+import { Clock, ChefHat, Package, ShoppingBag } from "lucide-react";
 import api from "@/lib/api";
 import type { Pedido, EstadoPedido } from "@/lib/types";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 
 const ESTADO_CONFIG: Record<EstadoPedido, { label: string; icon: React.ElementType; color: string; bg: string }> = {
-  pendiente:      { label: "Pendiente de confirmación", icon: Clock,       color: "text-yellow-600", bg: "bg-yellow-50" },
-  confirmado:     { label: "Confirmado",                 icon: CheckCircle, color: "text-blue-600",   bg: "bg-blue-50" },
-  en_preparacion: { label: "En preparación",             icon: ChefHat,     color: "text-orange-600", bg: "bg-orange-50" },
-  listo:          { label: "¡Listo para retirar!",       icon: Package,     color: "text-green-600",  bg: "bg-green-50" },
-  retirado:       { label: "Retirado",                   icon: ShoppingBag, color: "text-gray-600",   bg: "bg-gray-50" },
-  cancelado:      { label: "Cancelado",                  icon: Clock,       color: "text-red-600",    bg: "bg-red-50" },
+  pendiente:      { label: "Recibido — lo confirmaremos pronto", icon: Clock,       color: "text-yellow-600", bg: "bg-yellow-50" },
+  en_preparacion: { label: "En preparación",                      icon: ChefHat,     color: "text-orange-600", bg: "bg-orange-50" },
+  listo:          { label: "¡Listo para retirar!",                icon: Package,     color: "text-green-600",  bg: "bg-green-50" },
+  retirado:       { label: "Retirado",                            icon: ShoppingBag, color: "text-gray-600",   bg: "bg-gray-50" },
+  cancelado:      { label: "Cancelado",                           icon: Clock,       color: "text-red-600",    bg: "bg-red-50" },
 };
 
 export default function PedidoPage() {
@@ -23,6 +22,12 @@ export default function PedidoPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const cached = sessionStorage.getItem(`wina_pedido_${numero}`);
+    if (cached) {
+      setPedido(JSON.parse(cached));
+      setLoading(false);
+      return;
+    }
     api
       .get(`/pedidos/?numero_pedido=${numero}`)
       .then((r) => {

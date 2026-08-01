@@ -54,6 +54,7 @@ export default function CarritoPage() {
         })),
       };
       const res = await api.post("/pedidos/", payload);
+      sessionStorage.setItem(`wina_pedido_${res.data.numero_pedido}`, JSON.stringify(res.data));
       limpiar();
       router.push(`/pedido/${res.data.numero_pedido}`);
     } catch {
