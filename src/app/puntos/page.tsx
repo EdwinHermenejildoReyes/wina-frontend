@@ -77,7 +77,7 @@ export default function PuntosPage() {
                   <p className="text-xs text-gray-300 mt-0.5">{new Date(h.created_at).toLocaleDateString("es-EC", { day: "numeric", month: "short", year: "numeric" })}</p>
                 </div>
                 <p className={`font-bold text-sm ${h.tipo === "compra" ? "text-green-500" : "text-red-400"}`}>
-                  {h.tipo === "compra" ? "+" : "-"}{h.puntos}
+                  {h.tipo === "compra" ? "+" : "-"}{Math.abs(h.puntos)}
                 </p>
               </div>
             ))}
