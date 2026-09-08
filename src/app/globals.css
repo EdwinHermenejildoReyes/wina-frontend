@@ -1,14 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  --color-rosa:      #D45C8A;
-  --color-rosa-dark: #B84A75;
-  --color-crema:     #FFF5F8;
-  --color-dark:      #2D2D2D;
+  /* Paleta Wina: dorado, marrón, crema */
+  --color-rosa:      #E2AC1F;   /* dorado principal — botones, badges, highlights */
+  --color-rosa-dark: #C49010;   /* dorado oscuro — hover de botones */
+  --color-cafe:      #6B4226;   /* marrón — encabezados, texto de acento */
+  --color-crema:     #FFF6ED;   /* fondo principal */
+  --color-crema-alt: #FFF7EE;   /* fondo alternativo — cards, secciones */
+  --color-dark:      #2D2D2D;   /* texto base */
   --color-gris:      #F5F5F5;
-  --color-gris-borde:#E5E7EB;
+  --color-gris-borde:#E8DDD1;   /* bordes con tono cálido */
 
-  --font-sans: var(--font-poppins), system-ui, sans-serif;
+  --font-sans:    var(--font-poppins), system-ui, sans-serif;
+  --font-display: var(--font-bree), Georgia, serif;   /* Bree Serif — nombre de marca */
+  --font-script:  var(--font-satisfy), cursive;       /* Satisfy — detalle decorativo */
 }
 
 * {

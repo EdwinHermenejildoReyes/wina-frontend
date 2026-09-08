@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 
@@ -11,7 +12,7 @@ export default function LoginPage() {
   const { login } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading]   = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,59 +30,83 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-crema flex flex-col items-center justify-center px-6">
-      <div className="w-full max-w-sm">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-black text-rosa">Wina</h1>
-          <p className="text-sm text-gray-400 mt-1">Dulces y Pasteles</p>
-        </div>
+    <main className="min-h-screen bg-crema">
 
-        <div className="bg-white rounded-3xl p-6 shadow-sm">
-          <h2 className="font-bold text-dark text-lg mb-5">Iniciar sesión</h2>
+      {/* ── Hero ── */}
+      <section className="bg-cafe px-6 pt-8 pb-12">
+        <button
+          onClick={() => router.push("/menu")}
+          className="flex items-center gap-1.5 text-crema/60 hover:text-crema text-sm mb-4 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" /> Menú
+        </button>
+        <p className="font-script text-rosa text-lg">Bienvenida de vuelta ♡</p>
+        <h1 className="font-display text-4xl font-bold text-white leading-tight mt-0.5">
+          Iniciar sesión
+        </h1>
+      </section>
+
+      {/* ── Formulario ── */}
+      <div className="max-w-sm mx-auto px-4 -mt-5">
+        <div className="bg-white rounded-3xl px-6 py-6 shadow-sm border border-gris-borde">
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="text-xs text-gray-500 mb-1 block">Usuario o correo</label>
+              <label className="text-xs font-semibold text-dark/50 uppercase tracking-wide mb-1.5 block">
+                Usuario o correo
+              </label>
               <input
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="tu_usuario"
                 autoComplete="username"
-                className="w-full border border-gris-borde rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-rosa"
+                className="w-full border border-gris-borde rounded-2xl px-4 py-3 text-sm bg-crema-alt focus:outline-none focus:ring-2 focus:ring-cafe placeholder:text-gray-400"
               />
             </div>
+
             <div>
-              <label className="text-xs text-gray-500 mb-1 block">Contraseña</label>
+              <label className="text-xs font-semibold text-dark/50 uppercase tracking-wide mb-1.5 block">
+                Contraseña
+              </label>
               <input
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 placeholder="••••••••"
                 autoComplete="current-password"
-                className="w-full border border-gris-borde rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-rosa"
+                className="w-full border border-gris-borde rounded-2xl px-4 py-3 text-sm bg-crema-alt focus:outline-none focus:ring-2 focus:ring-cafe placeholder:text-gray-400"
               />
             </div>
+
             <button
               type="submit"
               disabled={loading || !username.trim() || !password}
-              className="w-full bg-rosa text-white font-bold py-3 rounded-2xl mt-2 disabled:opacity-60 transition-colors active:bg-rosa-dark"
+              className="w-full bg-cafe text-white font-semibold py-4 rounded-2xl mt-1 disabled:opacity-40 active:opacity-80 transition-opacity"
             >
               {loading ? "Entrando..." : "Entrar"}
             </button>
+
+            <div className="text-center pt-1">
+              <Link href="/recuperar-contrasena" className="text-xs text-gray-400 underline underline-offset-2">
+                ¿Olvidaste tu contraseña?
+              </Link>
+            </div>
           </form>
         </div>
 
-        <p className="text-center text-sm text-gray-400 mt-5">
-          ¿No tienes cuenta?{" "}
-          <Link href="/registro" className="text-rosa font-semibold">
-            Regístrate
-          </Link>
-        </p>
-        <p className="text-center mt-3">
-          <Link href="/menu" className="text-sm text-gray-400 underline">
+        <div className="mt-5 space-y-3 text-center">
+          <p className="text-sm text-gray-400">
+            ¿No tienes cuenta?{" "}
+            <Link href="/registro" className="text-cafe font-semibold">
+              Regístrate
+            </Link>
+          </p>
+          <Link href="/menu" className="block text-sm text-gray-400 underline underline-offset-2">
             Continuar sin cuenta
           </Link>
-        </p>
+        </div>
       </div>
+
     </main>
   );
 }

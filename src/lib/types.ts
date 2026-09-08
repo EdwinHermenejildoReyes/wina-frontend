@@ -12,6 +12,28 @@ export interface Usuario {
   puntos: number;
 }
 
+// ── Atributos de variantes ────────────────────────────────────────────────────
+
+export interface Sabor   { id: number; nombre: string; }
+export interface Relleno { id: number; nombre: string; }
+export interface Porcion { id: number; cantidad: number; descripcion: string; }
+export interface Estilo  { id: number; nombre: string; descripcion: string; }
+
+export interface VarianteProducto {
+  id: number;
+  sku: string;
+  sabor: number;
+  sabor_nombre: string;
+  relleno: number;
+  relleno_nombre: string;
+  porcion: number;
+  porcion_cantidad: number;
+  estilo: number;
+  estilo_nombre: string;
+  precio: string | null;
+  precio_efectivo: string;
+}
+
 // ── Catálogo ──────────────────────────────────────────────────────────────────
 
 export interface Producto {
@@ -25,6 +47,8 @@ export interface Producto {
   permite_personalizacion: boolean;
   orden: number;
   subcategoria: number;
+  tiene_variantes?: boolean;
+  variantes?: VarianteProducto[];
 }
 
 export interface Subcategoria {
@@ -45,12 +69,25 @@ export interface Categoria {
   subcategorias: Subcategoria[];
 }
 
+// ── Extras ────────────────────────────────────────────────────────────────────
+
+export interface ExtraWina {
+  id: number;
+  nombre: string;
+  categoria: string;
+  precio: number;
+  orden: number;
+}
+
 // ── Carrito ───────────────────────────────────────────────────────────────────
 
 export interface CarritoItem {
+  carritoKey: string;       // `${producto.id}-${variante?.id ?? 'base'}`
   producto: Producto;
+  variante?: VarianteProducto;
   cantidad: number;
   personalizacion: string;
+  extras: ExtraWina[];
 }
 
 // ── Pedidos ───────────────────────────────────────────────────────────────────
@@ -66,6 +103,8 @@ export interface PedidoDetalle {
   id: number;
   producto: number;
   producto_nombre: string;
+  variante: number | null;
+  variante_label: string | null;
   cantidad: number;
   precio_unitario: string;
   personalizacion: string;
@@ -81,6 +120,7 @@ export interface Pedido {
   estado: EstadoPedido;
   total: string;
   notas: string;
+  fecha_entrega: string | null;
   fecha_pedido: string;
   detalles: PedidoDetalle[];
 }
@@ -91,6 +131,7 @@ export interface PedidoCreatePayload {
   notas?: string;
   detalles: {
     producto: number;
+    variante?: number;
     cantidad: number;
     personalizacion?: string;
   }[];

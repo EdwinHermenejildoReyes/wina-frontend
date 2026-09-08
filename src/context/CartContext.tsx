@@ -1,21 +1,25 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import type { CarritoItem, Producto } from "@/lib/types";
+import type { CarritoItem, Producto, VarianteProducto, ExtraWina } from "@/lib/types";
 
 interface CartContextType {
   items: CarritoItem[];
   totalItems: number;
   totalPrecio: number;
-  agregar: (producto: Producto, cantidad: number, personalizacion: string) => void;
-  quitar: (productoId: number) => void;
-  actualizarCantidad: (productoId: number, cantidad: number) => void;
+  agregar: (producto: Producto, cantidad: number, personalizacion: string, variante?: VarianteProducto, extras?: ExtraWina[]) => void;
+  quitar: (carritoKey: string) => void;
+  actualizarCantidad: (carritoKey: string, cantidad: number) => void;
   limpiar: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 const STORAGE_KEY = "wina_carrito";
+
+function makeKey(productoId: number, varianteId?: number) {
+  return `${productoId}-${varianteId ?? "base"}`;
+}
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CarritoItem[]>([]);
@@ -31,41 +35,55 @@ export function CartProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   }, [items]);
 
-  const agregar = (producto: Producto, cantidad: number, personalizacion: string) => {
+  const agregar = (
+    producto: Producto,
+    cantidad: number,
+    personalizacion: string,
+    variante?: VarianteProducto,
+    extras?: ExtraWina[],
+  ) => {
+    const key = makeKey(producto.id, variante?.id);
     setItems((prev) => {
-      const existente = prev.find((i) => i.producto.id === producto.id);
+      const existente = prev.find((i) => i.carritoKey === key);
       if (existente) {
         return prev.map((i) =>
-          i.producto.id === producto.id
-            ? { ...i, cantidad: i.cantidad + cantidad, personalizacion: personalizacion || i.personalizacion }
+          i.carritoKey === key
+            ? {
+                ...i,
+                cantidad: i.cantidad + cantidad,
+                personalizacion: personalizacion || i.personalizacion,
+                extras: extras ?? i.extras,
+              }
             : i
         );
       }
-      return [...prev, { producto, cantidad, personalizacion }];
+      return [...prev, { carritoKey: key, producto, variante, cantidad, personalizacion, extras: extras ?? [] }];
     });
   };
 
-  const quitar = (productoId: number) => {
-    setItems((prev) => prev.filter((i) => i.producto.id !== productoId));
+  const quitar = (carritoKey: string) => {
+    setItems((prev) => prev.filter((i) => i.carritoKey !== carritoKey));
   };
 
-  const actualizarCantidad = (productoId: number, cantidad: number) => {
+  const actualizarCantidad = (carritoKey: string, cantidad: number) => {
     if (cantidad <= 0) {
-      quitar(productoId);
+      quitar(carritoKey);
       return;
     }
     setItems((prev) =>
-      prev.map((i) => (i.producto.id === productoId ? { ...i, cantidad } : i))
+      prev.map((i) => (i.carritoKey === carritoKey ? { ...i, cantidad } : i))
     );
   };
 
   const limpiar = () => setItems([]);
 
   const totalItems = items.reduce((sum, i) => sum + i.cantidad, 0);
-  const totalPrecio = items.reduce(
-    (sum, i) => sum + parseFloat(i.producto.precio) * i.cantidad,
-    0
-  );
+
+  const totalPrecio = items.reduce((sum, i) => {
+    const precio = parseFloat(i.variante?.precio_efectivo ?? i.producto.precio);
+    const extrasTotal = i.extras.reduce((s, e) => s + e.precio, 0);
+    return sum + (precio + extrasTotal) * i.cantidad;
+  }, 0);
 
   return (
     <CartContext.Provider value={{ items, totalItems, totalPrecio, agregar, quitar, actualizarCantidad, limpiar }}>
