@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import { Instagram, MessageCircle, Send, Leaf, Heart, Star, Clock, Gift, Facebook } from "lucide-react";
+import IconTikTok from "@/components/ui/IconTikTok";
 import NavBar from "@/components/NavBar";
 
-const WHATSAPP_NUMBER = "593XXXXXXXXX";
-const INSTAGRAM_URL   = "https://www.instagram.com/dulcesypasteleswina";
-const FACEBOOK_URL    = "#";
+const WHATSAPP_URL  = "https://wa.me/dulcesypasteleswina";
+const INSTAGRAM_URL = "https://www.instagram.com/dulcesypasteleswina";
+const FACEBOOK_URL  = "https://www.facebook.com/dulcesypasteleswina";
+const TIKTOK_URL    = "https://www.tiktok.com/@dulcesypasteleswina";
 
 const redesSociales = [
   {
@@ -18,17 +20,24 @@ const redesSociales = [
   },
   {
     emoji: "💬",
-    href: `https://wa.me/${WHATSAPP_NUMBER}`,
+    href: WHATSAPP_URL,
     titulo: "WhatsApp",
-    handle: "Escríbenos directamente",
+    handle: "@dulcesypasteleswina",
     descripcion: "La forma más rápida de hacer tu pedido o resolver cualquier duda sobre tu encargo.",
   },
   {
     emoji: "📘",
     href: FACEBOOK_URL,
     titulo: "Facebook",
-    handle: "Dulces y Pasteles Wina",
+    handle: "@dulcesypasteleswina",
     descripcion: "Síguenos en Facebook para ver reseñas, fotos de clientes y nuestras promociones especiales.",
+  },
+  {
+    emoji: "🎵",
+    href: TIKTOK_URL,
+    titulo: "TikTok",
+    handle: "@dulcesypasteleswina",
+    descripcion: "Mira nuestros videos de elaboración de tortas y postres artesanales.",
   },
 ];
 
@@ -42,7 +51,7 @@ const caracteristicas = [
 
 function buildWhatsAppUrl(nombre: string, telefono: string, mensaje: string) {
   const texto = `Hola Wina! Soy ${nombre.trim()}${telefono.trim() ? ` (${telefono.trim()})` : ""}.\n\n${mensaje.trim()}`;
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(texto)}`;
+  return `${WHATSAPP_URL}?text=${encodeURIComponent(texto)}`;
 }
 
 export default function ContactosPage() {
@@ -143,7 +152,7 @@ export default function ContactosPage() {
             <div className="mt-8 md:mt-0 md:w-64 shrink-0 space-y-5">
               <div className="bg-crema-alt rounded-2xl p-5">
                 <p className="font-display font-bold text-cafe text-sm mb-1">Horario de atención</p>
-                <p className="text-xs text-dark/65 leading-relaxed">
+                <p className="text-xs text-dark/65 leading-relaxed text-justify">
                   Lunes a sábado<br />
                   9:00 am – 6:00 pm<br />
                   <span className="text-gray-400">Domingos bajo pedido</span>
@@ -151,7 +160,7 @@ export default function ContactosPage() {
               </div>
               <div className="bg-crema-alt rounded-2xl p-5">
                 <p className="font-display font-bold text-cafe text-sm mb-1">Política de pedidos</p>
-                <p className="text-xs text-dark/65 leading-relaxed">
+                <p className="text-xs text-dark/65 leading-relaxed text-justify">
                   Nuestros productos son elaborados exclusivamente para cada cliente. Una vez confirmado el pedido y emitida la nota de venta, no se aceptan devoluciones por cambios de opinión.
                 </p>
               </div>
@@ -220,7 +229,11 @@ export default function ContactosPage() {
                className="text-gray-400 hover:text-rosa transition-colors">
               <Facebook className="w-5 h-5" />
             </a>
-            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer"
+            <a href={TIKTOK_URL} target="_blank" rel="noopener noreferrer"
+               className="text-gray-400 hover:text-rosa transition-colors">
+              <IconTikTok className="w-5 h-5" />
+            </a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
                className="text-gray-400 hover:text-rosa transition-colors">
               <MessageCircle className="w-5 h-5" />
             </a>

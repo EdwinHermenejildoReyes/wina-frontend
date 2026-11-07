@@ -9,8 +9,8 @@ import type { MiHistorialResponse } from "@/lib/types";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import NavBar from "@/components/NavBar";
 
-const META_PUNTOS    = 500;
-const WHATSAPP_NUMBER = "593XXXXXXXXX"; // reemplazar cuando María active el número de empresa
+const META_PUNTOS  = 500;
+const WHATSAPP_URL = "https://wa.me/dulcesypasteleswina";
 
 function labelTipo(tipo: string) {
   switch (tipo) {
@@ -48,7 +48,7 @@ export default function PuntosPage() {
   const mensajeWA  = encodeURIComponent(
     `Hola Wina! Tengo ${puntos} puntos acumulados y quiero canjear mi torta de regalo 🎂`
   );
-  const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${mensajeWA}`;
+  const waLink = `${WHATSAPP_URL}?text=${mensajeWA}`;
 
   return (
     <main className="min-h-screen bg-crema pb-10">

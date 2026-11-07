@@ -1,13 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MessageCircle, Star, Heart, Award, Sparkles, Leaf, Clock, Gift, Instagram, Facebook } from "lucide-react";
+import IconTikTok from "@/components/ui/IconTikTok";
 import NavBar from "@/components/NavBar";
 
 export const metadata = { title: "Wina — Nuestra Historia" };
 
-const WHATSAPP_NUMBER = "593XXXXXXXXX";
-const INSTAGRAM_URL   = "https://www.instagram.com/dulcesypasteleswina";
-const FACEBOOK_URL    = "#";
+const WHATSAPP_URL  = "https://wa.me/dulcesypasteleswina";
+const INSTAGRAM_URL = "https://www.instagram.com/dulcesypasteleswina";
+const FACEBOOK_URL  = "https://www.facebook.com/dulcesypasteleswina";
+const TIKTOK_URL    = "https://www.tiktok.com/@dulcesypasteleswina";
 
 const cards = [
   {
@@ -90,7 +92,7 @@ export default function WinaPage() {
           <div className="flex flex-col md:flex-row md:items-start md:gap-12">
 
             {/* Texto */}
-            <p className="flex-1 text-sm md:text-base text-dark/75 leading-relaxed">
+            <p className="flex-1 text-sm md:text-base text-dark/75 leading-relaxed text-justify">
               Dulces y Pasteles Wina nació en 2017, en un momento de cambio. Después de quedarme sin
               trabajo, encontré en la repostería una oportunidad para salir adelante. Todo comenzó con
               el deseo de sorprender a mis hijos en sus cumpleaños con tortas temáticas hechas con
@@ -163,12 +165,12 @@ export default function WinaPage() {
                className="text-gray-400 hover:text-rosa transition-colors">
               <Facebook className="w-5 h-5" />
             </a>
-            <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-rosa transition-colors"
-            >
+            <a href={TIKTOK_URL} target="_blank" rel="noopener noreferrer"
+               className="text-gray-400 hover:text-rosa transition-colors">
+              <IconTikTok className="w-5 h-5" />
+            </a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
+               className="text-gray-400 hover:text-rosa transition-colors">
               <MessageCircle className="w-5 h-5" />
             </a>
           </div>

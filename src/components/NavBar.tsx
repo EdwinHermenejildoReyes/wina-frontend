@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Instagram, Facebook } from "lucide-react";
+import IconTikTok from "@/components/ui/IconTikTok";
 
 const INSTAGRAM_URL = "https://www.instagram.com/dulcesypasteleswina";
-const FACEBOOK_URL  = "#";
+const FACEBOOK_URL  = "https://www.facebook.com/dulcesypasteleswina";
+const TIKTOK_URL    = "https://www.tiktok.com/@dulcesypasteleswina";
 
 const tabs = [
   { label: "Menú",      href: "/menu"      },
@@ -58,6 +60,10 @@ export default function NavBar() {
           <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer"
              className="text-gray-400 hover:text-rosa transition-colors">
             <Facebook className="w-5 h-5" />
+          </a>
+          <a href={TIKTOK_URL} target="_blank" rel="noopener noreferrer"
+             className="text-gray-400 hover:text-rosa transition-colors">
+            <IconTikTok className="w-5 h-5" />
           </a>
           <Link
             href="/menu"

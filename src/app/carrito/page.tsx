@@ -13,7 +13,9 @@ import NavBar from "@/components/NavBar";
 if (!process.env.NEXT_PUBLIC_IVA_PORCENTAJE) {
   throw new Error("Variable de entorno NEXT_PUBLIC_IVA_PORCENTAJE no definida");
 }
-const IVA_PORCENTAJE = parseFloat(process.env.NEXT_PUBLIC_IVA_PORCENTAJE);
+const _IVA_RAW = parseFloat(process.env.NEXT_PUBLIC_IVA_PORCENTAJE);
+// Acepta tanto 0.15 (fracción) como 15 (porcentaje entero) — normaliza siempre a fracción
+const IVA_PORCENTAJE = _IVA_RAW > 1 ? _IVA_RAW / 100 : _IVA_RAW;
 const DIAS_MIN_PREPARACION = 2;
 
 const DATOS_BANCARIOS = {
@@ -66,9 +68,11 @@ export default function CarritoPage() {
 
   const errNombre   = nombreTocado   ? validarNombre(nombre)   : null;
   const errTelefono = telefonoTocado ? validarTelefono(telefono) : null;
-  const [comprobante, setComprobante] = useState<File | null>(null);
-  const [preview,     setPreview]     = useState<string | null>(null);
-  const [enviando,    setEnviando]    = useState(false);
+  const [comprobante,     setComprobante]     = useState<File | null>(null);
+  const [preview,         setPreview]         = useState<string | null>(null);
+  const [enviando,        setEnviando]        = useState(false);
+  const [politicaAcepta,  setPoliticaAcepta]  = useState(false);
+  const [politicaExpand,  setPoliticaExpand]  = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const iva          = totalPrecio * IVA_PORCENTAJE;
@@ -124,6 +128,7 @@ export default function CarritoPage() {
     if (validarNombre(nombre))   { toast.error(validarNombre(nombre)!);   return; }
     if (validarTelefono(telefono)) { toast.error(validarTelefono(telefono)!); return; }
     if (!comprobante) { toast.error("Adjunta el comprobante de pago para continuar"); return; }
+    if (!politicaAcepta) { toast.error("Debes aceptar la política de pedidos para continuar"); return; }
 
     setEnviando(true);
     try {
@@ -378,6 +383,37 @@ export default function CarritoPage() {
             </p>
           </div>
         )}
+
+        {/* ── Política de pedidos ── */}
+        <div className="bg-white rounded-3xl px-5 py-4 shadow-sm border border-gris-borde">
+          <button
+            type="button"
+            onClick={() => setPoliticaExpand(!politicaExpand)}
+            className="w-full flex items-center justify-between gap-2 text-left"
+          >
+            <p className="font-display font-bold text-cafe text-sm">Política de pedidos</p>
+            <span className={`text-cafe/50 text-sm transition-transform duration-200 ${politicaExpand ? "rotate-180" : ""}`}>▾</span>
+          </button>
+          {politicaExpand && (
+            <p className="text-xs text-dark/65 leading-relaxed text-justify mt-3">
+              Nuestros productos son elaborados exclusivamente para cada cliente. Una vez confirmado el pedido
+              y emitida la nota de venta, no se aceptan devoluciones por cambios de opinión. En caso de
+              inconformidad con el producto, comunícate con nosotros por WhatsApp dentro de las 24 horas
+              siguientes a la entrega.
+            </p>
+          )}
+          <label className="flex items-start gap-3 mt-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={politicaAcepta}
+              onChange={(e) => setPoliticaAcepta(e.target.checked)}
+              className="mt-0.5 w-4 h-4 accent-cafe shrink-0"
+            />
+            <span className="text-xs text-dark/70 leading-relaxed">
+              He leído y acepto la política de pedidos
+            </span>
+          </label>
+        </div>
       </div>
 
       {/* ── Botón confirmar ── */}
@@ -392,14 +428,16 @@ export default function CarritoPage() {
           </div>
           <button
             onClick={handlePedir}
-            disabled={enviando || !comprobante || !!validarNombre(nombre) || !!validarTelefono(telefono)}
+            disabled={enviando || !comprobante || !!validarNombre(nombre) || !!validarTelefono(telefono) || !politicaAcepta}
             className="w-full bg-cafe text-white font-semibold py-4 rounded-2xl flex items-center justify-center gap-2 active:opacity-80 disabled:opacity-40 transition-opacity"
           >
             <ShoppingCart className="w-5 h-5" />
             <span>{enviando ? "Enviando pedido..." : "Confirmar pedido"}</span>
           </button>
-          {!comprobante && (
-            <p className="text-center text-xs text-gray-400 mt-2">Adjunta el comprobante para continuar</p>
+          {(!comprobante || !politicaAcepta) && (
+            <p className="text-center text-xs text-gray-400 mt-2">
+              {!comprobante ? "Adjunta el comprobante" : "Acepta la política de pedidos"} para continuar
+            </p>
           )}
         </div>
       </div>
