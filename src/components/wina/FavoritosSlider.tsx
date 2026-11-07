@@ -50,7 +50,12 @@ export default function FavoritosSlider() {
             </div>
             <div className="p-3">
               <p className="text-xs font-semibold text-dark leading-tight line-clamp-2">{p.nombre}</p>
-              <p className="text-sm font-bold text-rosa mt-1">${parseFloat(p.precio).toFixed(2)}</p>
+              <p className="text-sm font-bold text-rosa mt-1">
+                {p.tiene_variantes
+                  ? <span className="text-xs text-gray-400 font-normal">Desde ${parseFloat(p.precio).toFixed(2)}</span>
+                  : `$${parseFloat(p.precio).toFixed(2)}`
+                }
+              </p>
             </div>
           </Link>
         ))}
