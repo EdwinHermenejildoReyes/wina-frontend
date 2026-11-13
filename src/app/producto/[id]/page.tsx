@@ -82,14 +82,15 @@ export default function ProductoPage() {
   const extrasTotal = extrasSeleccionados.reduce((s, e) => s + e.precio, 0);
 
   useEffect(() => {
-    api.get("/extras/").then((r) => {
+    if (!id) return;
+    api.get(`/extras/?producto=${id}`).then((r) => {
       const lista = Array.isArray(r.data) ? r.data : (r.data.results ?? []);
       setExtrasDisp(lista.map((e: { id: number; nombre: string; categoria: string; precio: string; orden: number }) => ({
         ...e,
         precio: parseFloat(e.precio),
       })));
     }).catch(() => {});
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     api
