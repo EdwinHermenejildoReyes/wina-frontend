@@ -10,7 +10,7 @@ import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import NavBar from "@/components/NavBar";
 
 const META_PUNTOS  = 500;
-const WHATSAPP_URL = "https://wa.me/dulcesypasteleswina";
+const WHATSAPP_URL = "https://wa.me/593982541274";
 
 function labelTipo(tipo: string) {
   switch (tipo) {

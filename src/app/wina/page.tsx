@@ -6,7 +6,7 @@ import NavBar from "@/components/NavBar";
 
 export const metadata = { title: "Wina — Nuestra Historia" };
 
-const WHATSAPP_URL  = "https://wa.me/dulcesypasteleswina";
+const WHATSAPP_URL  = "https://wa.me/593982541274";
 const INSTAGRAM_URL = "https://www.instagram.com/dulcesypasteleswina";
 const FACEBOOK_URL  = "https://www.facebook.com/dulcesypasteleswina";
 const TIKTOK_URL    = "https://www.tiktok.com/@dulcesypasteleswina";

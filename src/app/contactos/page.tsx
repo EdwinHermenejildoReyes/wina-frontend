@@ -5,7 +5,7 @@ import { Instagram, MessageCircle, Send, Leaf, Heart, Star, Clock, Gift, Faceboo
 import IconTikTok from "@/components/ui/IconTikTok";
 import NavBar from "@/components/NavBar";
 
-const WHATSAPP_URL  = "https://wa.me/dulcesypasteleswina";
+const WHATSAPP_URL  = "https://wa.me/593982541274";
 const INSTAGRAM_URL = "https://www.instagram.com/dulcesypasteleswina";
 const FACEBOOK_URL  = "https://www.facebook.com/dulcesypasteleswina";
 const TIKTOK_URL    = "https://www.tiktok.com/@dulcesypasteleswina";
@@ -32,7 +32,7 @@ const redesSociales = [
     bg: "bg-[#25D366]",
     href: WHATSAPP_URL,
     titulo: "WhatsApp",
-    handle: "@dulcesypasteleswina",
+    handle: "+593 98 254 1274",
     descripcion: "La forma más rápida de hacer tu pedido o resolver cualquier duda sobre tu encargo.",
   },
   {
@@ -177,6 +177,15 @@ export default function ContactosPage() {
                   9:00 am – 6:00 pm<br />
                   <span className="text-gray-400">Domingos bajo pedido</span>
                 </p>
+              </div>
+              <div className="bg-crema-alt rounded-2xl p-5">
+                <p className="font-display font-bold text-cafe text-sm mb-1">Correo electrónico</p>
+                <a
+                  href="mailto:contacto@dulcesypasteleswina.com"
+                  className="text-xs text-rosa font-medium break-all hover:underline"
+                >
+                  contacto@dulcesypasteleswina.com
+                </a>
               </div>
               <div className="bg-crema-alt rounded-2xl p-5">
                 <p className="font-display font-bold text-cafe text-sm mb-1">Política de pedidos</p>

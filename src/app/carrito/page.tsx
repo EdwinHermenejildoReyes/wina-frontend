@@ -24,7 +24,7 @@ const DATOS_BANCARIOS = {
   numero:     "Próximamente",
   titular:    "Wina Dulces y Pasteles",
   ruc:        "Próximamente",
-  whatsapp:   "@dulcesypasteleswina",
+  whatsapp:   "+593 98 254 1274",
 };
 
 // ── Helpers de validación ─────────────────────────────────────────────────────
