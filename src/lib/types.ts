@@ -49,6 +49,7 @@ export interface Producto {
   subcategoria: number;
   tiene_variantes?: boolean;
   variantes?: VarianteProducto[];
+  imagenes_estilos?: Record<number, string>;
 }
 
 export interface Subcategoria {

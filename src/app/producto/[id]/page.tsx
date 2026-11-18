@@ -153,6 +153,10 @@ export default function ProductoPage() {
       : null,
   [variantes, estiloSel, saborSel, rellenoSel, porcionSel]);
 
+  const imagenActual = (estiloSel && producto?.imagenes_estilos?.[estiloSel])
+    ? producto.imagenes_estilos[estiloSel]
+    : producto?.imagen ?? null;
+
   const seleccionarEstilo = (id: number) => { setEstiloSel(id); setSaborSel(null); setRellenoSel(null); setPorcionSel(null); };
   const seleccionarSabor  = (id: number) => { setSaborSel(id);  setRellenoSel(null); setPorcionSel(null); };
   const seleccionarRelleno = (id: number) => { setRellenoSel(id); setPorcionSel(null); };
@@ -202,12 +206,12 @@ export default function ProductoPage() {
       {/* ── Imagen superpuesta al hero ── */}
       <div className="max-w-2xl mx-auto px-4 -mt-4 relative z-10">
         <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden bg-crema-alt shadow-md border border-gris-borde">
-          {producto.imagen ? (
+          {imagenActual ? (
             <Image
-              src={producto.imagen}
+              src={imagenActual}
               alt={producto.nombre}
               fill
-              className="object-cover"
+              className="object-cover transition-opacity duration-300"
               priority
             />
           ) : (
